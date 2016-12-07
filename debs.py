@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import threading
+
 import time
-from subprocess import CalledProcessError, check_call, getstatusoutput, check_output
+from subprocess import CalledProcessError, check_call, getstatusoutput, check_output, TimeoutExpired
 import json
 import unittest
 from pprint import pprint
@@ -30,8 +30,9 @@ class DeepinAppstore:
     '''
     def getdeblist(self):
         #return ['libreoffice','draftsight', 'deepin-screenshot', 'micropolis', 'gftp', 'brave']
-        return ['gftp', 'libreoffice', 'deluge', 'wesnoth', 'gambas3', 'lazarus', 'glade', 'skype', 'monodevelop', 'firefox-dde', 'texmacs', 'eclipse-android',
-                'nixnote2', 'qcad', 'freeciv', 'amarok', 'comix', 'scilab']
+        #return ['unvanquished', 'gftp', 'libreoffice', 'deluge', 'wesnoth', 'gambas3', 'lazarus', 'glade', 'skype', 'monodevelop', 'firefox-dde', 'texmacs', 'eclipse-android',
+        #        'nixnote2', 'qcad', 'freeciv', 'amarok', 'comix', 'scilab']
+        return ['libreoffice', 'deluge']
     #'''
 appstore = DeepinAppstore()
 
@@ -105,53 +106,53 @@ class TestAppstoreDebs(unittest.TestCase):
                 f.write(cutline)
                 print(cutline)
 
-                f.write('install %d app%s passed:\n' % (len(self.install_passed_apps), len(self.install_passed_apps) > 1 and "s" or ""))
-                print('install %d app%s passed:' % (len(self.install_passed_apps), len(self.install_passed_apps) > 1 and "s" or ""))
-                if len(self.install_passed_apps) > 0:
-                    f.write(','.join(self.install_passed_apps) + '\n\n')
-                    print(self.install_passed_apps)
+                f.write('install %d app%s passed:\n' % (len(cls.install_passed_apps), len(cls.install_passed_apps) > 1 and "s" or ""))
+                print('install %d app%s passed:' % (len(cls.install_passed_apps), len(cls.install_passed_apps) > 1 and "s" or ""))
+                if len(cls.install_passed_apps) > 0:
+                    f.write(','.join(cls.install_passed_apps) + '\n\n')
+                    print(cls.install_passed_apps)
                     print('\n')
-                f.write('install %d app%s failed:\n' % (len(self.install_failed_apps), len(self.install_failed_apps) > 1 and "s" or ""))
-                print('install %d app%s failed:' % (len(self.install_failed_apps), len(self.install_failed_apps) > 1 and "s" or ""))
-                if len(self.install_failed_apps) > 0:
-                    f.write(','.join(self.install_failed_apps) + '\n\n')
-                    print(self.install_failed_apps)
+                f.write('install %d app%s failed:\n' % (len(cls.install_failed_apps), len(cls.install_failed_apps) > 1 and "s" or ""))
+                print('install %d app%s failed:' % (len(cls.install_failed_apps), len(cls.install_failed_apps) > 1 and "s" or ""))
+                if len(cls.install_failed_apps) > 0:
+                    f.write(','.join(cls.install_failed_apps) + '\n\n')
+                    print(cls.install_failed_apps)
                     print('\n')
-                f.write('%d app%s existed:\n' % (len(self.existed_apps), len(self.existed_apps) > 1 and "s" or ""))
-                print('%d app%s existed:' % (len(self.existed_apps), len(self.existed_apps) > 1 and "s" or ""))
-                if len(self.existed_apps) > 0:
-                    f.write(','.join(self.existed_apps) + '\n\n')
-                    print(self.existed_apps)
-                    print('\n')
-                f.write(cutline)
-                print(cutline)
-
-                f.write('open %d app%s passed:\n' % (len(self.open_passed_apps), len(self.open_passed_apps) > 1 and "s" or ""))
-                print('open %d app%s passed:' % (len(self.open_passed_apps), len(self.open_passed_apps) > 1 and "s" or ""))
-                if len(self.open_passed_apps) > 0:
-                    f.write(','.join(self.open_passed_apps) + '\n\n')
-                    print(self.open_passed_apps)
-                    print('\n')
-                f.write('open %d app%s failed:\n' % (len(self.open_failed_apps), len(self.open_failed_apps) > 1 and "s" or ""))
-                print('open %d app%s failed:' % (len(self.open_failed_apps), len(self.open_failed_apps) > 1 and "s" or ""))
-                if len(self.open_failed_apps) >0:
-                    f.write(','.join(self.open_failed_apps) + '\n\n')
-                    print(self.open_failed_apps)
+                f.write('%d app%s existed:\n' % (len(cls.existed_apps), len(cls.existed_apps) > 1 and "s" or ""))
+                print('%d app%s existed:' % (len(cls.existed_apps), len(cls.existed_apps) > 1 and "s" or ""))
+                if len(cls.existed_apps) > 0:
+                    f.write(','.join(cls.existed_apps) + '\n\n')
+                    print(cls.existed_apps)
                     print('\n')
                 f.write(cutline)
                 print(cutline)
 
-                f.write('remove %d app%s passed:\n' % (len(self.remove_passed_apps), len(self.remove_passed_apps) > 1 and "s" or ""))
-                print('remove %d app%s passed:' % (len(self.remove_passed_apps), len(self.remove_passed_apps) > 1 and "s" or ""))
-                if len(self.remove_passed_apps) > 0:
-                    f.write(','.join(self.remove_passed_apps) + '\n\n')
-                    print(self.remove_passed_apps)
+                f.write('open %d app%s passed:\n' % (len(cls.open_passed_apps), len(cls.open_passed_apps) > 1 and "s" or ""))
+                print('open %d app%s passed:' % (len(cls.open_passed_apps), len(cls.open_passed_apps) > 1 and "s" or ""))
+                if len(cls.open_passed_apps) > 0:
+                    f.write(','.join(cls.open_passed_apps) + '\n\n')
+                    print(cls.open_passed_apps)
                     print('\n')
-                f.write('remove %d app%s failed:\n' % (len(self.remove_failed_apps), len(self.remove_failed_apps) > 1 and "s" or ""))
-                print('remove %d app%s failed:' % (len(self.remove_failed_apps), len(self.remove_failed_apps) > 1 and "s" or ""))
-                if len(self.remove_failed_apps) > 0:
-                    f.write(','.join(self.remove_failed_apps) + '\n\n')
-                    print(self.remove_failed_apps)
+                f.write('open %d app%s failed:\n' % (len(cls.open_failed_apps), len(cls.open_failed_apps) > 1 and "s" or ""))
+                print('open %d app%s failed:' % (len(cls.open_failed_apps), len(cls.open_failed_apps) > 1 and "s" or ""))
+                if len(cls.open_failed_apps) >0:
+                    f.write(','.join(cls.open_failed_apps) + '\n\n')
+                    print(cls.open_failed_apps)
+                    print('\n')
+                f.write(cutline)
+                print(cutline)
+
+                f.write('remove %d app%s passed:\n' % (len(cls.remove_passed_apps), len(cls.remove_passed_apps) > 1 and "s" or ""))
+                print('remove %d app%s passed:' % (len(cls.remove_passed_apps), len(cls.remove_passed_apps) > 1 and "s" or ""))
+                if len(cls.remove_passed_apps) > 0:
+                    f.write(','.join(cls.remove_passed_apps) + '\n\n')
+                    print(cls.remove_passed_apps)
+                    print('\n')
+                f.write('remove %d app%s failed:\n' % (len(cls.remove_failed_apps), len(cls.remove_failed_apps) > 1 and "s" or ""))
+                print('remove %d app%s failed:' % (len(cls.remove_failed_apps), len(cls.remove_failed_apps) > 1 and "s" or ""))
+                if len(cls.remove_failed_apps) > 0:
+                    f.write(','.join(cls.remove_failed_apps) + '\n\n')
+                    print(cls.remove_failed_apps)
                     print('\n')
                 f.write(cutline)
                 print(cutline)
@@ -221,74 +222,11 @@ class TestAppstoreDebs(unittest.TestCase):
             print(cutline)
 
             for deb in debs:
-
-                #install
                 install_deb(f, deb)
-                #t1 = threading.Thread(target=install_deb, args=(f,deb))
-                #t1.setDaemon(True)
-                #t1.start()
 
-                #open
                 open_app(f, deb)
 
-                #remove
                 remove_deb(f, deb)
-            '''
-            f.write(cutline)
-            print(cutline)
-
-            f.write('install %d app%s passed:\n' % (len(self.install_passed_apps), len(self.install_passed_apps) > 1 and "s" or ""))
-            print('install %d app%s passed:' % (len(self.install_passed_apps), len(self.install_passed_apps) > 1 and "s" or ""))
-            if len(self.install_passed_apps) > 0:
-                f.write(','.join(self.install_passed_apps) + '\n\n')
-                print(self.install_passed_apps)
-                print('\n')
-            f.write('install %d app%s failed:\n' % (len(self.install_failed_apps), len(self.install_failed_apps) > 1 and "s" or ""))
-            print('install %d app%s failed:' % (len(self.install_failed_apps), len(self.install_failed_apps) > 1 and "s" or ""))
-            if len(self.install_failed_apps) > 0:
-                f.write(','.join(self.install_failed_apps) + '\n\n')
-                print(self.install_failed_apps)
-                print('\n')
-            f.write('%d app%s existed:\n' % (len(self.existed_apps), len(self.existed_apps) > 1 and "s" or ""))
-            print('%d app%s existed:' % (len(self.existed_apps), len(self.existed_apps) > 1 and "s" or ""))
-            if len(self.existed_apps) > 0:
-                f.write(','.join(self.existed_apps) + '\n\n')
-                print(self.existed_apps)
-                print('\n')
-            f.write(cutline)
-            print(cutline)
-
-            f.write('open %d app%s passed:\n' % (len(self.open_passed_apps), len(self.open_passed_apps) > 1 and "s" or ""))
-            print('open %d app%s passed:' % (len(self.open_passed_apps), len(self.open_passed_apps) > 1 and "s" or ""))
-            if len(self.open_passed_apps) > 0:
-                f.write(','.join(self.open_passed_apps) + '\n\n')
-                print(self.open_passed_apps)
-                print('\n')
-            f.write('open %d app%s failed:\n' % (len(self.open_failed_apps), len(self.open_failed_apps) > 1 and "s" or ""))
-            print('open %d app%s failed:' % (len(self.open_failed_apps), len(self.open_failed_apps) > 1 and "s" or ""))
-            if len(self.open_failed_apps) >0:
-                f.write(','.join(self.open_failed_apps) + '\n\n')
-                print(self.open_failed_apps)
-                print('\n')
-            f.write(cutline)
-            print(cutline)
-
-            f.write('remove %d app%s passed:\n' % (len(self.remove_passed_apps), len(self.remove_passed_apps) > 1 and "s" or ""))
-            print('remove %d app%s passed:' % (len(self.remove_passed_apps), len(self.remove_passed_apps) > 1 and "s" or ""))
-            if len(self.remove_passed_apps) > 0:
-                f.write(','.join(self.remove_passed_apps) + '\n\n')
-                print(self.remove_passed_apps)
-                print('\n')
-            f.write('remove %d app%s failed:\n' % (len(self.remove_failed_apps), len(self.remove_failed_apps) > 1 and "s" or ""))
-            print('remove %d app%s failed:' % (len(self.remove_failed_apps), len(self.remove_failed_apps) > 1 and "s" or ""))
-            if len(self.remove_failed_apps) > 0:
-                f.write(','.join(self.remove_failed_apps) + '\n\n')
-                print(self.remove_failed_apps)
-                print('\n')
-            f.write(cutline)
-            print(cutline)
-        '''
-        #f.close()
 
 debs = TestAppstoreDebs()
 
@@ -306,9 +244,8 @@ def install_deb(f, deb):
         return
     try:
         output = check_output([appstore.appinstall_cmd + deb], shell=True, timeout=1800).decode()
-    except CalledProcessError as e:
+    except Exception as e:
         output = e.output.decode()
-        returncode = e.returncode
         if 'resource exists' in output:
             debs.existed_apps.append(deb)
             f.write(deb + ' existed:\n' + output + '\n\n' + cutline)
@@ -332,13 +269,6 @@ def open_app(f, deb):
     if len(serchresult) > 0:
         f.write('search %s result: %s\n' % (deb, serchresult[0].name))
         print('search %s result: %s' % (deb, serchresult[0].name))
-        '''
-        if (deb != 'libreoffice' and o == '已安装：(无)' and serchresult[0].name == 'LibreOffice') or (deb != 'deepin-wm' and serchresult[0].name == '多任务视图'):
-            debs.open_failed_apps.append(deb)
-            print("launcher not found %s but found %s" % (deb, serchresult[0].name))
-            f.write("launcher not found %s but found %s\n\n" % (deb, serchresult[0].name))
-            return
-        '''
         pyautogui.press('enter')
         if deb == 'deepin-screenshot':
             sleep(5)
@@ -384,12 +314,10 @@ def open_app(f, deb):
 
 def remove_deb(f, deb):
     closeWindows()
-    #status,output = getstatusoutput(appstore.appremove_cmd + deb)
     try:
         output = check_output([appstore.appremove_cmd + deb], shell=True, timeout=1800).decode()
-    except CalledProcessError as e:
+    except Exception as e:
         output = e.output.decode()
-        returncode = e.returncode
         debs.remove_failed_apps.append(deb)
         f.write('remove ' + deb + ' failed:\n' + output + '\n\n' + cutline)
         print('remove ' + deb + ' failed:\n' + output + '\n' + cutline)
@@ -408,7 +336,6 @@ def remove_deb(f, deb):
                 check_output([appstore.appremove_cmd + libreoffice_deb], shell=True, timeout=1800).decode()
         if deb == 'gftp':
             output = check_output([appstore.appremove_cmd + 'gftp-gtk'], shell=True, timeout=1800).decode()
-            #check_call(appstore.appremove_cmd + 'gftp-gtk', shell=True)
         if deb == 'deluge':
             check_output([appstore.appremove_cmd + 'deluge-gtk'], shell=True, timeout=1800).decode()
         if deb == 'wesnoth':
@@ -427,17 +354,8 @@ def remove_deb(f, deb):
             check_output([appstore.appremove_cmd + 'firefox'], shell=True, timeout=1800).decode()
         if deb == 'texmacs':
             check_output([appstore.appremove_cmd + 'xfig'], shell=True, timeout=1800).decode()
-        ''''
-        if deb == 'eclipse-android' or deb == 'myeclipse' or deb == 'minecraft' or deb == 'eclipse-jee' or deb == 'eclipse-committers'
-            or deb == 'smartsvn' or deb == 'smartcvs' or deb == 'magarena' or deb == 'freecol' or deb == 'eclipse-cpp' or deb == 'eclipse-rcp'
-            or deb == 'eclipse-java' or deb == 'eclipse-javascript' or deb == 'eclipse-testing' or deb == 'eclipse-scout' or deb == 'eclipse-reporting':
-        '''
-        if 'eclipse' in deb or deb == 'smartsvn' or deb == 'smartcvs' or deb == 'magarena' or deb == 'freecol':
-            check_output([appstore.appremove_cmd + 'openjdk-8-jre'], shell=True, timeout=1800).decode()
         if deb == 'gkdebconf' or deb == 'codelite' or deb == 'qtcreator' or deb == 'codeblocks':
             check_output([appstore.appremove_cmd + 'xterm'], shell=True, timeout=1800).decode()
-        #if deb == 'lives' or deb == 'chromium' or deb == 'texmacs' or deb == 'playonlinux':
-        #    check_call(appstore.appremove_cmd + '', shell=True)
         if deb == 'qcad':
             check_output([appstore.appremove_cmd + 'qjackctl'], shell=True, timeout=1800).decode()
         if deb == 'freeciv':
@@ -456,6 +374,9 @@ def remove_deb(f, deb):
             vmpk_debs = ['qjackctl', 'qsynth']
             for vmpk_deb in vmpk_debs:
                 check_output([appstore.appremove_cmd + vmpk_deb], shell=True, timeout=1800).decode()
+        javas = ['openjdk-8-jre', 'icedtea-8-plugin']
+        for java_app in javas:
+            check_output([appstore.appremove_cmd + java_app], shell=True, timeout=1800).decode()
     except Exception as e:
         print(e)
     closeWindows()
