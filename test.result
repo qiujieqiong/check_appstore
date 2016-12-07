@@ -1,0 +1,33 @@
+test_debs (__main__.TestAppstoreDebs) ... ERROR
+
+======================================================================
+ERROR: test_debs (__main__.TestAppstoreDebs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/subprocess.py", line 695, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/usr/lib/python3.5/subprocess.py", line 1072, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/usr/lib/python3.5/subprocess.py", line 1716, in _communicate
+    self._check_timeout(endtime, orig_timeout)
+  File "/usr/lib/python3.5/subprocess.py", line 1098, in _check_timeout
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['lastore-tools test -j install unvanquished']' timed out after 1800 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "./debs.py", line 173, in test_debs
+    install_deb(f, deb)
+  File "./debs.py", line 254, in install_deb
+    output = check_output([appstore.appinstall_cmd + deb], shell=True, timeout=1800).decode()
+  File "/usr/lib/python3.5/subprocess.py", line 626, in check_output
+    **kwargs).stdout
+  File "/usr/lib/python3.5/subprocess.py", line 700, in run
+    stderr=stderr)
+subprocess.TimeoutExpired: Command '['lastore-tools test -j install unvanquished']' timed out after 1800 seconds
+
+----------------------------------------------------------------------
+Ran 1 test in 66608.897s
+
+FAILED (errors=1)

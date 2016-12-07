@@ -1,0 +1,13 @@
+#prepare envioronment:
+1.sudo vi /etc/sudoers, add `yoursystemname  ALL=(ALL) NOPASSWD:ALL` at the end of file(if yoursystemname is deepin, then add `deepin  ALL=(ALL) NOPASSWD:ALL`)
+2.sudo apt-get install python3-pyatspi python3-pip python3-setuptools libwnck-3-dev  python3-tk
+3.sudo pip3 install pyautogui dogtail
+4.gsettings set org.gnome.desktop.interface toolkit-accessibility true
+
+#run script:
+1.tar zxvf check_appstore.tar.gz
+2.cd appstore
+3.sudo cp tree.py /usr/local/lib/python3.5/dist-packages/dogtail
+4.sudo cp predicate.py /usr/local/lib/python3.5/dist-packages/dogtail
+5.python3 debs.py
+6.in ** apps.info **, you can find all packages need checked, and install/open/remove details
